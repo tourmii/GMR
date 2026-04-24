@@ -21,7 +21,7 @@ if __name__ == "__main__":
         help="SMPLX motion file to load.",
         type=str,
         # required=True,
-        default="/home/yanjieze/projects/g1_wbc/GMR/GVHMR/outputs/demo/tennis/hmr4d_results.pt",
+        default="/home/robotics/Documents/uynl/GVHMR/outputs/demo/dance/hmr4d_results.pt",
     )
     
     parser.add_argument(
@@ -149,8 +149,11 @@ if __name__ == "__main__":
         # save from wxyz to xyzw
         root_rot = np.array([qpos[3:7][[1,2,3,0]] for qpos in qpos_list])
         dof_pos = np.array([qpos[7:] for qpos in qpos_list])
-        local_body_pos = None
-        body_names = None
+        
+        num_frames = len(qpos_list)
+        
+        local_body_pos = np.zeros((num_frames, 1, 3), dtype=np.float32)
+        body_names = ["pelvis"] 
         
         motion_data = {
             "fps": aligned_fps,
